@@ -21,12 +21,12 @@ class Login extends CI_Controller {
        $result=$this->login_model->validate();
 
 
-       if(!result){
+       if(!$result){
 
        	 $this->index();
        }
        else{
-       	 redirect('Index')
+       	 redirect('Dashboard');
        }
 	}
 }
