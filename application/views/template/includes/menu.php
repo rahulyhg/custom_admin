@@ -5,11 +5,17 @@
                     <!-- Menu header part -->
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <?php
-                            	$query = get_query('profile_image', 'users', " username = '$user_id' ");
-                            	$data = mysqli_fetch_array($query, MYSQLI_NUM);
+                            	// $query = get_query('profile_image', 'users', " username = '$user_id' ");
+                                 $this->db->select('profile_image');
+                                 $this->db->from('users');
+                                 $this->db->where('username',$user_id);
+                                
+                                  $query=$this->db->get();
+                            	// $data = mysqli_fetch_array($query, MYSQLI_NUM);
+                                  return $query;
                             ?>
 
-                             <span class="profile-image simple-tooltip" title="Profile pic" style="background: url('<?php if(!$data[0]){ echo 'img/user.png'; }else { echo $data[0]; } ?>');"></span>
+                             <span class="profile-image simple-tooltip" title="Profile pic" style="background: url('<?php if(!$data[0]){ base_url();  echo 'assets/img/user.png'; }else { echo $data[0]; } ?>');"></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="clear">
                                     <span class="block m-t-xs">

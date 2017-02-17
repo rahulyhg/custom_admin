@@ -20,7 +20,7 @@ class login_model extends CI_model{
              $query=$this->db->get();
 
              if($query->num_rows()==1){
-             	$row->$query->$row();
+             	$row=$query->row();
              	$data=array(
              		'id'=>$row->id,
              		'user_id'=>$row->username,

@@ -26,7 +26,49 @@ class Login extends CI_Controller {
        	 $this->index();
        }
        else{
-       	 redirect('Dashboard');
+       	$this->dashboard();
        }
 	}
+
+      public function dashboard()
+      {
+            
+           switch($_SESSION['user_group']){
+            case "1":
+                  redirect('user_group_1');
+                  break;
+            case "2":
+                  redirect('user_group_2');
+                  break;
+            case "3":
+                  redirect('user_group_3');
+                  break;
+            case "4":
+                  redirect('user_group_4');
+                  break;
+            case "5":
+                  redirect('user_group_5');
+                  break;
+            case "6":
+                  redirect('user_group_6');
+                  break;
+            case "7":
+                  redirect('user_group_7');
+                  break;
+            case "9":
+                  redirect('user_group_9');
+                  break;
+            case "10":
+                  redirect('user_group_10');
+                  break;
+            case "11":
+                  redirect('user_group_11');
+                  break;
+            case "12":
+                  redirect('user_group_12');
+                  break;
+      }
+
+
+      }
 }
