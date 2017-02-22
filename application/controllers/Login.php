@@ -35,7 +35,7 @@ class Login extends CI_Controller {
             
            switch($_SESSION['user_group']){
             case "1":
-                  redirect('user_group_1');
+                  redirect('gp1');
                   break;
             case "2":
                   redirect('user_group_2');

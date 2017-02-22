@@ -522,12 +522,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
 
     <!-- arrowchat -->
-    <script type="text/javascript" src="/arrowchat/external.php?type=djs" charset="utf-8"></script>
-    <script type="text/javascript" src="/arrowchat/external.php?type=js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="/arrowchat/external.php?type=djs" charset="utf-8"></script> -->
+    <!-- <script type="text/javascript" src="/arrowchat/external.php?type=js" charset="utf-8"></script> -->
     <!-- end arrowchat -->
 
     <!-- desktop notification -->
-    <script src="js/desktop-notification.php"></script>
+    <script src="<?php base_url(); ?>assets/js/desktop-notification.php"></script>
     <script>
 
         $.ajax({

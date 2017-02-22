@@ -6,25 +6,23 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <?php
                             	// $query = get_query('profile_image', 'users', " username = '$user_id' ");
-                                 $this->db->select('profile_image');
-                                 $this->db->from('users');
-                                 $this->db->where('username',$user_id);
-                                
-                                  $query=$this->db->get();
+                                  $user_id=$this->session->user_id;
                             	// $data = mysqli_fetch_array($query, MYSQLI_NUM);
-                                  return $query;
-                            ?>
+                                 $query =$this->db->query("SELECT profile_image FROM users WHERE username='$user_id'");
+                                 $row =$query->row();
+                                 $profile_image= $row->profile_image;
+                                 ?>
 
-                             <span class="profile-image simple-tooltip" title="Profile pic" style="background: url('<?php if(!$data[0]){ base_url();  echo 'assets/img/user.png'; }else { echo $data[0]; } ?>');"></span>
+                             <span class="profile-image simple-tooltip" title="Profile pic" style="background: url('<?php if(! $profile_image){ base_url();  echo 'assets/img/user.png'; }else { echo $profile_image; } ?>');"></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="clear">
                                     <span class="block m-t-xs">
                                         <strong class="font-bold">
-                                            <?php echo $_SESSION['name']; ?>
+                                            <?php echo $this->session->name; ?>
                                         </strong>
                                     </span>
                                     <span class="text-muted text-xs block">
-                                        <?php echo $_SESSION['user_role']; ?> <b class="caret"></b>
+                                        <?php echo $this->session->user_role; ?> <b class="caret"></b>
                                     </span>
                                 </span>
                             </a>
@@ -70,86 +68,70 @@
                     </li>
                     <!-- end dashboard -->
 
-                    <!-- user restriction (links for all users other than admin & coordinator) -->
+                   <!-- user restriction (links for only admin & coordinator) -->
                     <?php
-                        if($_SESSION['user_group'] != 1 &&
-                            $_SESSION['user_role_id'] != 4 &&
-                            $_SESSION['user_role_id'] != 12 &&
-                            $_SESSION['user_group'] != 2 &&
-                            $_SESSION['user_group'] != 8 &&
-                            $_SESSION['user_group'] != 9 &&
-                            $_SESSION['user_group'] != 10&&
-                            $_SESSION['user_group'] !=11 &&
-                            $_SESSION['user_group'] !=12
-                        ):
-                    ?>
-
-                    <!-- all tasks -->
-                    <li <?php if($current_page == 'alltasks' || $current_page == 'task-calendar-view') : ?>class="active" <?php endif; ?>>
-                        <a href=""><i class="fa fa-archive"></i> <span class="nav-label">My Tasks <label class="label label-info pull-right"> <?php echo $count = get_count('*', 'project_tasks', " project_tasks_assigned_to = '$user_id' AND project_tasks_status = 'Ongoing' "); ?> </label></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="alltasks"><i class="fa fa-tasks"></i> All Tasks</a></li>
-                            <li><a href="calendar-view"><i class="fa fa-calendar"></i> Calendar View</a></li>
-                        </ul>
-                    </li>
-                    <!-- end all tasks -->
-
-                    <!-- completed tasks -->
-                    <li <?php if($current_page == 'completedtasks') : ?>class="active" <?php endif; ?>>
-                        <a href="completedtasks"><i class="fa fa-check-circle-o"></i> <span class="nav-label">Completed Tasks <label class="label label-info pull-right"> <?php echo $count = get_count('*', 'project_tasks', " project_tasks_assigned_to = '$user_id' AND project_tasks_status = 'Completed' "); ?> </label></span></a>
-                    </li>
-                    <!-- end completed tasks -->
-                    <?php
-                        endif;
-                    ?>
-                    <!-- end user restriction -->
-
-                    <!-- user restriction (links for only admin & coordinator) -->
-                    <?php
-                        if($_SESSION['user_group'] == 1 || $_SESSION['user_role_id'] == 4 || $_SESSION['user_group'] == 2 ||$_SESSION['user_role_id'] == 15 ):
+                        if($this->session->user_group == 1 || $this->session->user_role_id == 4 || $this->session->user_group == 2 ||$this->session->user_role_id == 15 ):
                     ?>
 
                     <!-- projects -->
                     <li <?php if($current_page == 'projects' || $current_page == 'allprojects') : ?>class="active" <?php endif; ?>>
                         <a href="#"><i class="fa fa-cube"></i> <span class="nav-label">Projects <label class="label label-info pull-right"> <?php
-		                        		if($_SESSION['user_group'] == 1 ||
-		                        			$_SESSION['user_role_id'] == 4){
-			                        			echo $count = get_count('*', 'projects', '');
-			                        	} else if($_SESSION['team_lead'] == 1 && $_SESSION['user_group'] == 8){
-				                        	$type = $_SESSION['user_client_type'];
-				                        	echo $count = get_count('*', 'projects', "project_package_type = '$type' ");
-				                        }else if($_SESSION['user_group'] == 9){
-					                        $type = $_SESSION['user_client_type'];
-					                        $user_id = $_SESSION['user_id'];
-				                        	echo $count = get_count('*', 'projects', "project_package_type = '$type' AND alloted_to = '$user_id' ");
+		                        		if($this->session->user_group == 1 ||
+		                        			$this->session->user_role_id == 4){
+			                        			// echo $count = get_count('*', 'projects', '');
+                                               $query=$this->db->get('projects');
+                                               echo $count=$query->num_rows();
+			                        	} else if($this->session->team_lead == 1 && $this->session->user_group == 8){
+				                        	$type = $this->db->user_client_type;
+				                        	// echo $count = get_count('*', 'projects', "project_package_type = '$type' ");
+                                            $query=$this->db->query("SELECT * FROM projects WHERE project_package_type='$type'");
+                                            echo $count=$query->num_rows();
+				                        }else if( $this->session->user_group == 9){
+					                        $type = $this->session->user_client_type;
+					                        $user_id =  $this->session->user_id;
+				                        	// echo $count = get_count('*', 'projects', "project_package_type = '$type' AND alloted_to = '$user_id' ");
+                                            $query=$this->db->query("SELECT * FROM projects WHERE project_package_type = '$type' AND alloted_to = '$user_id' ");
+                                            echo $count=$query->num_rows();
 					                    }else{
-				                        	echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' ");
+				                        	// echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' ");
+                                            $query=$this->db->query("SELECT * FROM projects WHERE project_sales_executive ='$user_name'");
+
 				                        }
 				                    ?>  </label></span></a>
                         <ul class="nav nav-second-level collapse padding-fix">
-                            <?php if($_SESSION['user_role_id'] == 1 || $_SESSION['user_group'] == 2 || $_SESSION['team_lead'] == 1) : ?><li><a href="addnewproject"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
+                            <?php if($this->session->user_role_id == 1 || $this->session->user_group == 2 ||$this->session->team_lead == 1) : ?><li><a href="addnewproject"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
                             <li><a href="completedprojects"><i class="fa fa-check"></i> Completed Projects <label class="label label-info pull-right"> <?php
-												if($_SESSION['user_group'] == 1 ||
-													$_SESSION['user_role_id'] == 4 ) {
-														echo $count = get_count('*', 'projects', "project_status = 'completed'");
+												if($this->session->user_group == 1 ||
+													$this->session->user_role_id == 4 ) {
+														// echo $count = get_count('*', 'projects', "project_status = 'completed'");
+                                                    $this->db->query("SELECT * FROM projects WHERE project_status = 'completed' ");
+                                                   echo $count=$query->num_rows();
 												}
-												else if($_SESSION['user_group'] == 8 && $_SESSION['team_lead'] == 1){
-													$type = $_SESSION['user_client_type'];
-													echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' ");
+												else if($this->session->user_group == 8 && $this->session->team_lead == 1){
+													$type = $this->session->user_client_type;
+													// echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' ");
+                                                    $this->db->query("SELECT * FROM  projects WHERE project_status = 'completed' AND project_package_type = '$type'  ");
+                                                    echo $count=$query->num_rows();
 												}
-												else if($_SESSION['user_group'] == 9){
-													$type = $_SESSION['user_client_type'];
-													$user_id = $_SESSION['user_id'];
-													echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' AND alloted_to = '$user_id' ");
+												else if($this->session->user_group == 9){
+													$type = $this->session->user_client_type;
+													$user_id = $this->session->user_id;
+													// echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' AND alloted_to = '$user_id' ");
+                                                    $this->db->query("SELECT * FROM projects WHERE project_status='completed' AND project_package_type='$type' AND alloted_to='$user_id'");
+                                                     echo $count=$query->num_rows();
 												}
 												else{
-													echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' AND project_status = 'completed' ");
+													// echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' AND project_status = 'completed' ");
+                                                    $this->db->query("SELECT * FROM projects WHERE project_sales_executive = '$user_name' AND project_status = 'completed' ");
+                                                    echo $count=$query->num_rows();
 												}
 											?> </label></a></li>
                             <li><a href="ongoingprojects"><i class="fa fa-spinner fa-pulse"></i> Ongoing Projects <label class="label label-info pull-right"> <?php
-												if($_SESSION['user_group'] == 1 ||
-													$_SESSION['user_role_id'] == 4) {
-														echo $count = get_count('*', 'projects', "project_status = 'ongoing' ");
+												if($this->session->user_group == 1 ||
+													$this->session->user_role_id == 4) {
+														// echo $count = get_count('*', 'projects', "project_status = 'ongoing' ");
+                                                      $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' ");
+                                                       echo $count= $query->num_rows();
 												} else if( $_SESSION['team_lead'] == 1 && $_SESSION['user_group'] == 8){
 													$type = $_SESSION['user_client_type'];
 													echo $count = get_count('*', 'projects', "project_status = 'ongoing' AND project_package_type = '$type'");
