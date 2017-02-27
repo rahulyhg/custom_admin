@@ -33,7 +33,7 @@ class Login extends CI_Controller {
       public function dashboard()
       {
             
-           switch($_SESSION['user_group']){
+           switch($this->$userdata[0]->user_group){
             case "1":
                   redirect('gp1');
                   break;
