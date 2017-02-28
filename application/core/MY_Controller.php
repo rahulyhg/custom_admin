@@ -24,5 +24,10 @@ class MY_Controller extends CI_Controller{
 			$this->$userdata =$this->common_model->getUserData($username);
 		}
 	}
+	
+	public function getID(){
+	   return $this->$userdata;
+	}
+	
 }
 ?>
