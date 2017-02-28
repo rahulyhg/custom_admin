@@ -1,10 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends MY_Controller {
 
 	function __construct() {
             parent::__construct();
+
                    }
 
 	
@@ -19,7 +20,8 @@ class Login extends CI_Controller {
        $this->form_validation->set_rules('username','Username','trim|required');
        $this->form_validation->set_rules('password','Password','trim|required');
        $result=$this->login_model->validate();
-
+      
+                 
 
        if(!$result){
 
@@ -33,7 +35,7 @@ class Login extends CI_Controller {
       public function dashboard()
       {
             
-           switch($this->$userdata[0]->user_group){
+           switch($this->$userdata->user_group){
             case "1":
                   redirect('gp1');
                   break;
