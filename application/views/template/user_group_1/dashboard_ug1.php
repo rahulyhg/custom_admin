@@ -1,11 +1,11 @@
 <?php
 $date = date('Y-m-d');
 if($_SESSION['user_role_id'] == 1){ // Admin Dashboard
-$user_name = $_SESSION['name'];
+$user_name = $this->userdata[0]->name;
 ?>
 <div id="page-wrapper" class="gray-bg">
 	<br>
-		<?php if($_SESSION['sales_grp_lead'] !== "") { ?>
+		<?php if( $this->userdata[0]->sales_grp_lead !== "") { ?>
 		<div class="pull-right">
 			<form method="GET">
 				<?php
@@ -25,8 +25,8 @@ $user_name = $_SESSION['name'];
 							<?php echo $user_selected_data[0]; ?>">
 						</option>
 						<?php
-						 $sales_grp_lead= $_SESSION['sales_grp_lead'];
-						 $branch = $_SESSION['branch'];
+						 $sales_grp_lead= $this->userdata[0]->sales_grp_lead;
+						 $branch =  $this->userdata[0]->branch;
 						 $user = get_query('username, name', 'users', " branch = '$branch' AND user_group = '2' AND sales_grp='$sales_grp_lead'");
 						 while($user_data = mysqli_fetch_array($user, MYSQLI_NUM)):
 						 if($user_id != $user_data[0]):
@@ -61,9 +61,9 @@ $user_name = $_SESSION['name'];
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
 											 echo get_count('*', 'projects', " project_sales_executive_id = '$user_id' ");
-											 }else if($_SESSION['user_group'] == 2){
+											 }else if( $this->userdata[0]->user_group == 2){
 											 echo get_count('*', 'projects', " project_sales_executive = '$user_name' ");
-											 }else if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4) {
+											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4) {
 											 echo get_count('*', 'projects', '');
 											 }
 											 ?>
@@ -90,9 +90,9 @@ $user_name = $_SESSION['name'];
 											 $uid_data = mysqli_fetch_array($uid, MYSQLI_NUM);
 											 $client_sales_executive =$uid_data[0];
 											 echo get_count('*', 'clients', "client_sales_executive = '$client_sales_executive' ");
-											 }else if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4){
+											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
 											 echo get_count('*', 'clients', '');
-											 }else if($_SESSION['user_group'] == 2){
+											 }else if( $this->userdata[0]->user_group == 2){
 											 echo get_count('*', 'clients', " client_sales_executive = '$user_name' ");
 											 }
 											 ?>
@@ -115,10 +115,10 @@ $user_name = $_SESSION['name'];
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
 											 echo get_count('*', 'projects', " project_sales_executive_id = '$user_id' AND project_status = 'completed'");
-											 }else if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4){
+											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
 											 echo get_count('*', 'projects', "project_status = 'completed'");
 											 }
-											 else if($_SESSION['user_group'] == 2){
+											 else if( $this->userdata[0]->user_group == 2){
 											 echo get_count('*', 'projects', "project_status = 'completed' AND project_sales_executive = '$user_name' ");
 											 }
 											 ?>
@@ -141,10 +141,10 @@ $user_name = $_SESSION['name'];
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
 											 echo get_count('*', 'projects', " project_sales_executive_id = '$user_id' AND project_status = 'ongoing' ");
-											 } else if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4){
+											 } else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
 											 echo get_count('*', 'projects', "project_status = 'ongoing'");
 											 }
-											 else if($_SESSION['user_group'] == 2){
+											 else if( $this->userdata[0]->user_group == 2){
 											 echo get_count('*', 'projects', "project_status = 'ongoing' AND project_sales_executive = '$user_name' ");
 											 }
 											 ?>
@@ -177,10 +177,10 @@ $user_name = $_SESSION['name'];
 											 $user_id=$_GET['selected_userid'];
 											 $project_count= get_count('*', 'projects', " project_sales_executive_id = '$user_id' ");
 											 }
-											 else if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4){
+											 else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
 											 $project_count = get_count('*', 'projects', '');
 											 }
-											 else if($_SESSION['user_group'] == 2){
+											 else if( $this->userdata[0]->user_group == 2){
 											 $project_count = get_count('*', 'projects', " project_sales_executive = '$user_name' ");
 											 }
 											 if($project_count){
@@ -202,10 +202,10 @@ $user_name = $_SESSION['name'];
 													 $user_id=$_GET['selected_userid'];
 													 $query1= get_query('project_client_id, project_id, project_title, project_duration', 'projects', " project_sales_executive_id = '$user_id ' AND project_status = 'ongoing' ORDER BY project_date_created DESC LIMIT 5 ");
 													 }
-													 else if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4){
+													 else if ($this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
 													 $query1 = get_query('project_client_id, project_id, project_title, project_duration', 'projects '," project_status='ongoing' ORDER BY project_date_created DESC LIMIT 5 ");
 													 }
-													 else if($_SESSION['user_group'] == 2){
+													 else if( $this->userdata[0]->user_group == 2){
 													 $query1 = get_query('project_client_id, project_id, project_title, project_duration', 'projects', " project_sales_executive = '$user_name' AND project_status = 'ongoing' ORDER BY project_date_created DESC LIMIT 5");
 													 }
 													 while($data1 = mysqli_fetch_array($query1, MYSQLI_NUM)):
@@ -275,7 +275,7 @@ $user_name = $_SESSION['name'];
 													<?php } ?>
 												</div>
 											</div>
-											<?php if($_SESSION['user_role_id'] == 1 || $_SESSION['user_group'] == 8) : ?>
+											<?php if ($this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_group == 8) : ?>
 											<div class="row">
 												<div class="col-lg-12">
 													<div class="ibox float-e-margins">
@@ -296,7 +296,7 @@ $user_name = $_SESSION['name'];
 																	<tr>
 																		<th>Company Name</th>
 																		<th>Follow Up Date</th>
-																		<?php if($_SESSION['user_role_id'] == 1 ): ?>
+																		<?php if( $this->userdata[0]->user_role_id == 1 ): ?>
 																		<th>Support Executive</th>
 																		<?php endif; ?>
 																		<th>Details</th>
@@ -319,7 +319,7 @@ $user_name = $_SESSION['name'];
 																		<td>
 																			<?php echo $data1[1]; ?>
 																		</td>
-																		<?php if($_SESSION['user_role_id'] == 1 ): ?>
+																		<?php if( $this->userdata[0]->user_role_id == 1 ): ?>
 																		<td>
 																			<?php echo $executive_data[0]; ?>
 																		</td>
@@ -344,7 +344,7 @@ $user_name = $_SESSION['name'];
 												</div>
 												<!--</div>-->
 												<?php endif; ?>
-												<?php if($_SESSION['user_group'] == 2): ?>
+												<?php if( $this->userdata[0]->user_group == 2): ?>
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="row">
@@ -367,7 +367,7 @@ $user_name = $_SESSION['name'];
 																		 $user_id = $_GET['selected_userid'];
 																		 $count = get_count('company_id', 'sales_dsr_updates', " user_id = '$user_id' AND follow_up LIKE '%$date%' AND status = 'Follow Up' ");
 																		 }
-																		 else {$user_id = $_SESSION['user_id'];
+																		 else {$user_id = $this->userdata[0]->user_id;
 																		 $count = get_count('company_id', 'sales_dsr_updates', " user_id = '$user_id' AND follow_up LIKE '%$date%' AND status = 'Follow Up' ");
 																		 }
 																		 if($count):
@@ -459,10 +459,10 @@ $user_name = $_SESSION['name'];
 																			<div class="ibox-content">
 																				<?php
 																				 if($_GET){
-																				 $user_id = $_SESSION['user_id'];
+																				 $user_id =  $this->userdata[0]->user_id;
 																				 $count = get_count('*', 'telecaller', " user_id = '$user_id' AND status = 'Follow Up' AND DATE(follow_up) = '$date' AND call_status = 0 ");
 																				 }
-																				 else{ $user_id = $_SESSION['user_id'];
+																				 else{ $user_id =  $this->userdata[0]->user_id;
 																				 $count = get_count('*', 'telecaller', " user_id = '$user_id' AND status = 'Follow Up' AND DATE(follow_up) = '$date' AND call_status = 0 ");
 																				 }
 																				 if($count):
@@ -565,7 +565,7 @@ $user_name = $_SESSION['name'];
 																						 $count = get_count('*', 'dataentry', " status = 1 AND allocated_to = '$user_id' AND status = 'Appointment Fixed' AND DATE(appointment) = '$date'");
 																						 }
 																						 else {
-																						 $user_id = $_SESSION['user_id'];
+																						 $user_id =  $this->userdata[0]->user_id;
 																						 $count = get_count('*', 'dataentry', " status = 1 AND allocated_to = '$user_id' AND status = 'Appointment Fixed' AND DATE(appointment) = '$date'");
 																						 }
 																						 if($count):
@@ -641,7 +641,7 @@ $user_name = $_SESSION['name'];
 																				</div>
 																			</div>
 																		</div>
-																		<?php if($_SESSION['user_role_id']==3 || $_GET) : ?>
+																		<?php if( $this->userdata[0]->user_role_id==3 || $_GET) : ?>
 																		<div class="row">
 																			<div class="col-lg-12">
 																				<div class="row">
@@ -665,7 +665,7 @@ $user_name = $_SESSION['name'];
 																								 $count = get_count('*', 'dataentry', " status = 1 AND allocated_to = '$user_id' AND status = 'Appointment Fixed' AND DATE(appointment) = '$date' AND allocated_by != '$user_id' ");
 																								 }
 																								 else{
-																								 $user_id = $_SESSION['user_id'];
+																								 $user_id =  $this->userdata[0]->user_id;
 																								 $count = get_count('*', 'dataentry', " status = 1 AND allocated_to = '$user_id' AND status = 'Appointment Fixed' AND DATE(appointment) = '$date' AND allocated_by != '$user_id' ");
 																								 }
 																								 if($count):
