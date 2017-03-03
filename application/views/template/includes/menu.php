@@ -4,22 +4,17 @@
 
                     <!-- Menu header part -->
                     <li class="nav-header">
-                        <div class="dropdown profile-element"> <?php
-                            	// $query = get_query('profile_image', 'users', " username = '$user_id' ");
-                                  	// $data = mysqli_fetch_array($query, MYSQLI_NUM);
-                                
-                                 ?>
-
-                             <span class="profile-image simple-tooltip" title="Profile pic" style="background: url('<?php if(!     $this->$userdata[0]->profile_image){ base_url();  echo 'assets/img/user.png'; }else { echo $this->$userdata[0]->profile_image; } ?>');"></span>
+                        <div class="dropdown profile-element"> 
+                             <span class="profile-image simple-tooltip" title="Profile pic" style="background: url('<?php if(!     $this->userdata[0]->profile_image){ base_url();  echo 'assets/img/user.png'; }else { echo $this->userdata[0]->profile_image; } ?>');"></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="clear">
                                     <span class="block m-t-xs">
                                         <strong class="font-bold">
-                                            <?php echo $this->$userdata[0]->name; ?>
+                                            <?php echo $this->userdata[0]->name; ?>
                                         </strong>
                                     </span>
                                     <span class="text-muted text-xs block">
-                                        <?php echo $this->$userdata[0]->user_role; ?> <b class="caret"></b>
+                                        <?php echo $this->userdata[0]->user_role_name; ?> <b class="caret"></b>
                                     </span>
                                 </span>
                             </a>
@@ -41,7 +36,7 @@
                     <div class="modal-dialog">
                        <div class="modal-content">
                               <div class="modal-header">
-                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                    <h4 class="modal-title">Update Profile Pic</h4>
                               </div>
                               <div class="modal-body">
@@ -60,59 +55,55 @@
                      </div>
 
                     <!-- Dashboard -->
-                    <li <?php if($current_page == 'dashboard') : ?>class="active" <?php endif; ?>>
+                    <li <?php if($current_page == 'Dashboard') : ?>class="active" <?php endif; ?>>
                         <a href="index"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
                     </li>
                     <!-- end dashboard -->
 
                    <!-- user restriction (links for only admin & coordinator) -->
                     <?php
-                        if($this->$userdata[0]->user_group == 1 || $this->$userdata[0]->user_role_id == 4 || $this->$userdata[0]->user_group == 2 ||$this->$userdata[0]->user_role_id == 15 ):
+                        if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_role_id == 4 || $this->userdata[0]->user_group == 2 ||$this->userdata[0]->user_role_id == 15 ):
                     ?>
 
                     <!-- projects -->
                     <li <?php if($current_page == 'projects' || $current_page == 'allprojects') : ?>class="active" <?php endif; ?>>
                         <a href="#"><i class="fa fa-cube"></i> <span class="nav-label">Projects <label class="label label-info pull-right"> <?php
-		                        		if($this->$userdata[0]->user_group == 1 ||
-		                        			$this->$userdata[0]->user_role_id == 4){
-			                        			// echo $count = get_count('*', 'projects', '');
-                                               $query=$this->db->get('projects');
-                                               echo $count=$query->num_rows();
-			                        	} else if($this->$userdata[0]->team_lead == 1 && $this->$userdata[0]->user_group == 8){
+		                        		if($this->userdata[0]->user_group == 1 ||
+		                        			$this->userdata[0]->user_role_id == 4){
+			                        			
+                                               echo $this->menu_model->count_projects('','','');
+			                        	} else if($this->userdata[0]->team_lead == 1 && $this->userdata[0]->user_group == 8){
 				                        	$type = $this->db->user_client_type;
-				                        	// echo $count = get_count('*', 'projects', "project_package_type = '$type' ");
-                                            $query=$this->db->query("SELECT * FROM projects WHERE project_package_type='$type'");
-                                            echo $count=$query->num_rows();
-				                        }else if( $this->$userdata[0]->user_group == 9){
-					                        $type = $this->$userdata[0]->user_client_type;
-					                        $user_id =  $this->$userdata[0]->user_id;
-				                        	// echo $count = get_count('*', 'projects', "project_package_type = '$type' AND alloted_to = '$user_id' ");
-                                            $query=$this->db->query("SELECT * FROM projects WHERE project_package_type = '$type' AND alloted_to = '$user_id' ");
-                                            echo $count=$query->num_rows();
+				                        	
+                                            echo $this->menu_model->count_projects($type,'','');
+				                        }else if( $this->userdata[0]->user_group == 9){
+					                        $type = $this->userdata[0]->user_client_type;
+					                        $user_id =  $this->userdata[0]->user_id;
+				                        	echo $this->menu_model->count_projects($type,$user_id,'');
 					                    }else{
-				                        	// echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' ");
-                                            $query=$this->db->query("SELECT * FROM projects WHERE project_sales_executive ='$user_name'");
-
+				                        	
+                                            $user_name= $this->userdata[0]->name;
+                                            echo $this->menu_model->count_projects('','',$user_name);
 				                        }
 				                    ?>  </label></span></a>
                         <ul class="nav nav-second-level collapse padding-fix">
-                            <?php if($this->$userdata[0]->user_role_id == 1 || $this->$userdata[0]->user_group == 2 ||$this->$userdata[0]->team_lead == 1) : ?><li><a href="addnewproject"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
+                            <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 ||$this->userdata[0]->team_lead == 1) : ?><li><a href="addnewproject"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
                             <li><a href="completedprojects"><i class="fa fa-check"></i> Completed Projects <label class="label label-info pull-right"> <?php
-												if($this->$userdata[0]->user_group == 1 ||
-													$this->$userdata[0]->user_role_id == 4 ) {
+												if($this->userdata[0]->user_group == 1 ||
+													$this->userdata[0]->user_role_id == 4 ) {
 														// echo $count = get_count('*', 'projects', "project_status = 'completed'");
                                                     $this->db->query("SELECT * FROM projects WHERE project_status = 'completed' ");
                                                    echo $count=$query->num_rows();
 												}
-												else if($this->$userdata[0]->user_group == 8 && $this->$userdata[0]->team_lead == 1){
-													$type = $this->$userdata[0]->user_client_type;
+												else if($this->userdata[0]->user_group == 8 && $this->userdata[0]->team_lead == 1){
+													$type = $this->userdata[0]->user_client_type;
 													// echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' ");
                                                     $this->db->query("SELECT * FROM  projects WHERE project_status = 'completed' AND project_package_type = '$type'  ");
                                                     echo $count=$query->num_rows();
 												}
-												else if($this->$userdata[0]->user_group == 9){
-													$type = $this->$userdata[0]->user_client_type;
-													$user_id = $this->$userdata[0]->user_id;
+												else if($this->userdata[0]->user_group == 9){
+													$type = $this->userdata[0]->user_client_type;
+													$user_id = $this->userdata[0]->user_id;
 													// echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' AND alloted_to = '$user_id' ");
                                                     $this->db->query("SELECT * FROM projects WHERE project_status='completed' AND project_package_type='$type' AND alloted_to='$user_id'");
                                                      echo $count=$query->num_rows();
@@ -124,20 +115,20 @@
 												}
 											?> </label></a></li>
                             <li><a href="ongoingprojects"><i class="fa fa-spinner fa-pulse"></i> Ongoing Projects <label class="label label-info pull-right"> <?php
-												if($this->$userdata[0]->user_group == 1 ||
-													$this->$userdata[0]->user_role_id == 4) {
+												if($this->userdata[0]->user_group == 1 ||
+													$this->userdata[0]->user_role_id == 4) {
 														// echo $count = get_count('*', 'projects', "project_status = 'ongoing' ");
                                                       $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' ");
                                                        echo $count= $query->num_rows();
-												} else if($this->$userdata[0]->team_lead == 1 && $this->$userdata[0]->user_group == 8){
-													$type =$this->$userdata[0]->user_client_type;
+												} else if($this->userdata[0]->team_lead == 1 && $this->userdata[0]->user_group == 8){
+													$type =$this->userdata[0]->user_client_type;
 													// echo $count = get_count('*', 'projects', "project_status = 'ongoing' AND project_package_type = '$type'");
                                                     $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' AND project_package_type = '$type'");
                                                     echo $count=$query->num_rows();
 												}
-												else if($this->$userdata[0]->user_group == 9){
-													$type = $this->$userdata[0]->user_client_type;
-													$user_id =$this->$userdata[0]->user_id;
+												else if($this->userdata[0]->user_group == 9){
+													$type = $this->userdata[0]->user_client_type;
+													$user_id =$this->userdata[0]->user_id;
 													// echo $count = get_count('*', 'projects', "project_status = 'ongoing' AND project_package_type = '$type' AND alloted_to = '$user_id'");
                                                     $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' AND project_package_type = '$type' AND alloted_to = '$user_id'");
                                                      echo $count= $query->num_rows();
@@ -157,24 +148,24 @@
                     <!-- company -->
                     <li <?php if($current_page == 'clients') : ?>class="active" <?php endif; ?>>
                         <a href="#"><i class="fa fa-university"></i> <span class="nav-label">Company <label class="label label-info pull-right"> <?php
-		                        		if($this->$userdata[0]->user_group == 1 ||
-		                        			$this->$userdata[0]->user_role_id == 4
+		                        		if($this->userdata[0]->user_group == 1 ||
+		                        			$this->userdata[0]->user_role_id == 4
 		                        			){
 			                        			// echo $count = get_count('*', 'clients', '');
                                                $this->db->query("SELECT * FROM clients");
                                                echo $count = $query->num_rows();
-			                        	}else if($this->$userdata[0]->team_lead == 1 && $this->$userdata[0]->user_group == 8){
+			                        	}else if($this->userdata[0]->team_lead == 1 && $this->userdata[0]->user_group == 8){
 				                        	$i = 0;
-				                        	$type = $this->$userdata[0]->user_client_type;
+				                        	$type = $this->userdata[0]->user_client_type;
 				                        	$query = get_query('project_client_id', 'projects', "project_package_type = '$type' ");
 				                        	while($data = mysqli_fetch_array($query, MYSQLI_NUM)){
 					                        	$i += get_count('*','clients',"client_id = '$data[0]'");
 				                        	}
 				                        	echo $i;
-				                        }else if($this->$userdata[0]->user_group == 9){
+				                        }else if($this->userdata[0]->user_group == 9){
 					                        $i = 0;
-				                        	$type = $this->$userdata[0]->user_client_type;
-				                        	$user_id = $this->$userdata[0]->user_id;
+				                        	$type = $this->userdata[0]->user_client_type;
+				                        	$user_id = $this->userdata[0]->user_id;
 				                        	$query = get_query('project_client_id', 'projects', "project_package_type = '$type' AND alloted_to = '$user_id' ");
 				                        	while($data = mysqli_fetch_array($query, MYSQLI_NUM)){
 					                        	$i += get_count('*','clients',"client_id = '$data[0]'");
@@ -185,27 +176,27 @@
 				                        }
 									?> </label></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <?php if($this->$userdata[0]->user_role_id == 1 || $this->$userdata[0]->user_group == 2 || $this->$userdata[0]->team_lead == 1) : ?><li><a href="addnewclient"><i class="fa fa-plus"></i> Add Company</a></li><?php endif; ?>
+                            <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 || $this->userdata[0]->team_lead == 1) : ?><li><a href="addnewclient"><i class="fa fa-plus"></i> Add Company</a></li><?php endif; ?>
                             <li><a href="allclients"><i class="fa fa-check"></i> All Company</a></li>
                         </ul>
                     </li>
                     <!-- end company -->
 
                     <?php
-                        if($this->$userdata[0]->user_role_id == 1 || $this->$userdata[0]->user_role_id == 4 ):
+                        if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_role_id == 4 ):
                     ?>
                     <li <?php if($current_page == 'individualtasks') : ?>class="active" <?php endif; ?>>
                         <a href="individualtasks"><i class="glyphicon glyphicon-th"></i> <span class="nav-label">Individual Tasks</span></a>
                     </li>
                     <?php endif; ?>
-                    <?php if($this->$userdata[0]->user_group == 3 ): ?>
+                    <?php if($this->userdata[0]->user_group == 3 ): ?>
                     <li <?php if($current_page == 'worksheet') : ?>class="active" <?php endif; ?>>
                         <a href="worksheet"><i class="fa fa-calendar"></i> <span class="nav-label">Worksheet Calendar</span></a>
                     </li>
                     <?php endif; ?>
 
                     <!-- user restriction -->
-                    <?php if($this->$userdata[0]->user_role_id == 12 || $this->$userdata[0]->user_role_id == 1 || $this->$userdata[0]->user_group == 8 || $this->$userdata[0]->user_group == 9 ) : ?>
+                    <?php if($this->userdata[0]->user_role_id == 12 || $this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 8 || $this->userdata[0]->user_group == 9 ) : ?>
 
                     <!-- customer services -->
                     <li <?php if($current_page == 'customer-details') : ?>class="active" <?php endif; ?>>
@@ -238,7 +229,7 @@
                             <span class="nav-label">Enquiry Reporting
                         </a>
                         <ul class="nav nav-second-level collapse">
-                            <?php if($this->$userdata[0]->user_role_id != 1): ?><li <?php if($current_page == 'enquiryreporting') : ?>class="active" <?php endif; ?>><a href="enquiryreporting"><i class="fa fa-plus"></i> Add New Reporting</a></li><?php endif; ?>
+                            <?php if($this->userdata[0]->user_role_id != 1): ?><li <?php if($current_page == 'enquiryreporting') : ?>class="active" <?php endif; ?>><a href="enquiryreporting"><i class="fa fa-plus"></i> Add New Reporting</a></li><?php endif; ?>
                             <li <?php if($current_page == 'allenquiryreporting') : ?>class="active" <?php endif; ?>><a href="allenquiryreporting"><i class="fa fa-check"></i> All Reporting</a></li>
                             <li <?php if($current_page == 'enquiry_dash') : ?>class="active" <?php endif; ?>><a href="enquiry_dash"><i class="fa fa-dashboard"></i> Enquiry Dashboard</a></li>
                         </ul>
@@ -272,12 +263,12 @@
 
 
                     <!-- user restriction (only for admin) -->
-                    <?php if($this->$userdata[0]->user_role_id == 1) : ?>
+                    <?php if($this->userdata[0]->user_role_id == 1) : ?>
 
                     <?php endif; ?>
                     <!-- end sales report -->
 
-                    <?php if($this->$userdata[0]->user_role_id == 1) : ?>
+                    <?php if($this->userdata[0]->user_role_id == 1) : ?>
 
                     <?php endif; ?>
 
@@ -285,7 +276,7 @@
                     <!-- end user restriction -->
 
                     <!-- user restriction -->
-                    <?php if($this->$userdata[0]->user_role_id == 8): ?>
+                    <?php if($this->userdata[0]->user_role_id == 8): ?>
 
                     <!-- adwords reports -->
                     <li <?php if($current_page == 'adwordsreport' || $current_page == 'alladwordsreports') : ?>class="active" <?php endif; ?>>
@@ -303,7 +294,7 @@
                     <?php endif; ?>
                     <!-- end user restriction -->
 
-                    <?php if($this->$userdata[0]->user_group == 1 || $this->$userdata[0]->user_group == 7): ?>
+                    <?php if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_group == 7): ?>
                     <!-- fb planner & activity -->
                     <li <?php if($current_page == 'fb-planner' || $current_page == 'db-activity' || $current_page == 'view-fb-history') : ?>class="active" <?php endif; ?>>
                         <a href="#">
@@ -320,7 +311,7 @@
                     <?php endif; ?>
 
                     <?php
-                        if($this->$userdata[0]->user_group == 1 || $this->$userdata[0]->user_group == 2 ):
+                        if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_group == 2 ):
                     ?>
                     <!-- sales report -->
                     <li <?php if($current_page == 'sales_report') : ?>class="active" <?php endif; ?>>
@@ -347,7 +338,7 @@
                     <li <?php if($current_page == 'telecaller') : ?>class="active" <?php endif; ?>>
                         <a href="#"><i class=" glyphicon glyphicon-phone-alt"></i> <span class="nav-label"> Self Calling</span></a>
                         <ul class="nav nav-second-level collapse" >
-                            <?php if($this->$userdata[0]->tele_lead ==1) {?>
+                            <?php if($this->userdata[0]->tele_lead ==1) {?>
                             <li><a href="tele-monitoring"><i class="glyphicon glyphicon-scale"></i>Monitoring</a></li>
                             <?php } ?>
                             <li><a href="telecaller"><i class="glyphicon glyphicon-phone-alt"></i> Database</a></li>
@@ -367,7 +358,7 @@
                     </li>
                     <?php endif; ?>
 
-                    <?php if($this->$userdata[0]->user_group == 1) : ?>
+                    <?php if($this->userdata[0]->user_group == 1) : ?>
 
                     <!--Weekly Analysis Report  -->
                     <li <?php if($current_page == 'weekly_analysis_report') : ?>class="active" <?php endif; ?>>
@@ -376,7 +367,7 @@
                     <!-- Weekly Analysis Report -->
                     <?php endif; ?>
 
-                     <?php if($this->$userdata[0]->user_group == 1 ) : ?>
+                     <?php if($this->userdata[0]->user_group == 1 ) : ?>
                     <!--Add target  -->
                      <li <?php if($current_page == 'add_target') : ?>class="active" <?php endif; ?>>
                         <a href="#"><i class=" glyphicon glyphicon-flag"></i> <span class="nav-label"> Target</span></a>
@@ -389,7 +380,7 @@
                     <?php endif; ?>
 
                     <!--dataentry-->
-                    <?php if($this->$userdata[0]->user_group == 10): ?>
+                    <?php if($this->userdata[0]->user_group == 10): ?>
                     <li <?php if($current_page == 'dataentry') : ?>class="active" <?php endif; ?>>
                         <a href="#"><i class="glyphicon glyphicon-list-alt"></i> <span class="nav-label"> Data Entry</span></a>
                         <ul class="nav nav-second-level collapse" >
@@ -422,10 +413,10 @@
 
                   <!--end of self calling-->
 
-                      <?php if($this->$userdata[0]->hrm == 1 || $this->$userdata[0]->user_group == 1): ?>
+                      <?php if($this->userdata[0]->HRM == 1 || $this->userdata[0]->user_group == 1): ?>
                     <!--HRM-->
                   	<li <?php if($current_page == 'recruitment_management') : ?>class="active" <?php endif; ?>>
-                        <a href="#"><i class="fa fa-briefcase"></i> <span class="nav-label">HRM<label> <?php if($this->$userdata[0]->user_group == 1 || $this->$userdata[0]->user_role_id == 16 || $this->$userdata[0]->team_lead == 1);  ?> </label></span></a>
+                        <a href="#"><i class="fa fa-briefcase"></i> <span class="nav-label">HRM<label> <?php if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_role_id == 16 || $this->userdata[0]->team_lead == 1);  ?> </label></span></a>
                         <ul class="nav nav-second-level collapse padding-fix">
                             <li><a href="training_material"><i class="fa fa-book"></i>Training material management</a></li>
                             <li><a href="hr-policy"><i class="fa fa-info-circle"></i> HR policy</a></li>
@@ -504,7 +495,7 @@
                      <!--<li <?php if($current_page == 'team_member') : ?>class="active" <?php endif; ?>>
                         <a href="teammember"><i class="fa fa-users"></i> <span class="nav-label">Team member </span></a>
                     </li>-->
-                    <?php if($this->userdata->user_role_id == 1 || $this->userdata->user_group == 11 ||$this->userdata[0]->user_group == 3) : ?>
+                    <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 11 ||$this->userdata[0]->user_group == 3) : ?>
 
                     <li <?php if($current_page == 'team_member' ) : ?>class="active" <?php endif; ?>>
                         <a href="teammember"><i class="fa fa-users"></i> <span class="nav-label">Team member </span></a>
@@ -525,7 +516,7 @@
 
                       <?php endif; ?>
                       <!-- end of data verification -->
-                    <?php if($this->userdata->hr != 1): ?>
+                    <?php if($this->userdata[0]->hr != 1): ?>
                     <li><a href="hr-policy"><i class="fa fa-info-circle"></i> HR policy</a></li>
                 <?php endif; ?>
                 <!-- enquiry tracking swapna
@@ -553,7 +544,7 @@
                                 </ul>
                             </li>
                       <?php endif; ?>
-                      <?php if($this->userdata->tele == 1): ?>
+                      <?php if($this->userdata[0]->tele == 1): ?>
                         <li <?php if($current_page == 'dataentry') : ?>class="active" <?php endif; ?>>
                             <a href="#"><i class="glyphicon glyphicon-list-alt"></i> <span class="nav-label"> Data Entry</span></a>
                             <ul class="nav nav-second-level collapse padding-fix" >
@@ -591,7 +582,7 @@
                          </ul>
                      </li>
                       <?php endif; ?>
-                      <?php if($this->userdata->id == 39 || $this->userdata[0]->id == 52):?>
+                      <?php if($this->userdata[0]->id == 39 || $this->userdata[0]->id == 52):?>
                         <li <?php if($current_page == 'allocation') : ?>  class="active" <?php endif; ?>>
                             <a href="allocation"><i class="fa fa-share"></i> <span class="nav-label">Allocation </span></a>
                         </li>
