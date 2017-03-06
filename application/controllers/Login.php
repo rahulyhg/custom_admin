@@ -6,7 +6,7 @@ class Login extends MY_Controller {
 	function __construct() {
             parent::__construct();
 
-                   }
+       }
 
 	
 	public function index()
@@ -35,12 +35,12 @@ class Login extends MY_Controller {
       public function dashboard()
       {
             
-           switch($this->$userdata->user_group){
+           switch($this->userdata[0]->user_group){
             case "1":
                   redirect('gp1');
                   break;
             case "2":
-                  redirect('user_group_2');
+                  redirect('gp2');
                   break;
             case "3":
                   redirect('user_group_3');

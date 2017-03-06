@@ -36,7 +36,7 @@
                     <div class="modal-dialog">
                        <div class="modal-content">
                               <div class="modal-header">
-                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
                                    <h4 class="modal-title">Update Profile Pic</h4>
                               </div>
                               <div class="modal-body">
@@ -71,72 +71,57 @@
 		                        		if($this->userdata[0]->user_group == 1 ||
 		                        			$this->userdata[0]->user_role_id == 4){
 			                        			
-                                               echo $this->menu_model->count_projects('','','');
+                                               echo $this->common_model->count_projects('','','');
 			                        	} else if($this->userdata[0]->team_lead == 1 && $this->userdata[0]->user_group == 8){
 				                        	$type = $this->db->user_client_type;
 				                        	
-                                            echo $this->menu_model->count_projects($type,'','');
+                                            echo $this->common_model->count_projects($type,'','');
 				                        }else if( $this->userdata[0]->user_group == 9){
 					                        $type = $this->userdata[0]->user_client_type;
 					                        $user_id =  $this->userdata[0]->user_id;
-				                        	echo $this->menu_model->count_projects($type,$user_id,'');
+				                        	echo $this->common_model->count_projects($type,$user_id,'');
 					                    }else{
 				                        	
                                             $user_name= $this->userdata[0]->name;
-                                            echo $this->menu_model->count_projects('','',$user_name);
+                                            echo $this->common_model->count_projects('','',$user_name);
 				                        }
 				                    ?>  </label></span></a>
                         <ul class="nav nav-second-level collapse padding-fix">
                             <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 ||$this->userdata[0]->team_lead == 1) : ?><li><a href="addnewproject"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
                             <li><a href="completedprojects"><i class="fa fa-check"></i> Completed Projects <label class="label label-info pull-right"> <?php
-												if($this->userdata[0]->user_group == 1 ||
-													$this->userdata[0]->user_role_id == 4 ) {
-														// echo $count = get_count('*', 'projects', "project_status = 'completed'");
-                                                    $this->db->query("SELECT * FROM projects WHERE project_status = 'completed' ");
-                                                   echo $count=$query->num_rows();
+												if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_role_id == 4 ) {
+														echo $this->common_model->count_completed_projects('','','');
 												}
 												else if($this->userdata[0]->user_group == 8 && $this->userdata[0]->team_lead == 1){
 													$type = $this->userdata[0]->user_client_type;
-													// echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' ");
-                                                    $this->db->query("SELECT * FROM  projects WHERE project_status = 'completed' AND project_package_type = '$type'  ");
-                                                    echo $count=$query->num_rows();
+													echo $this->common_model->count_completed_projects($type,'','');
 												}
 												else if($this->userdata[0]->user_group == 9){
 													$type = $this->userdata[0]->user_client_type;
 													$user_id = $this->userdata[0]->user_id;
-													// echo $count = get_count('*', 'projects', "project_status = 'completed' AND project_package_type = '$type' AND alloted_to = '$user_id' ");
-                                                    $this->db->query("SELECT * FROM projects WHERE project_status='completed' AND project_package_type='$type' AND alloted_to='$user_id'");
-                                                     echo $count=$query->num_rows();
+													echo $this->common_model->count_completed_projects($type,$user_id,'');
 												}
 												else{
-													// echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' AND project_status = 'completed' ");
-                                                    $this->db->query("SELECT * FROM projects WHERE project_sales_executive = '$user_name' AND project_status = 'completed' ");
-                                                    echo $count=$query->num_rows();
+                                                     $user_name= $this->userdata[0]->name;
+													echo $this->common_model->count_completed_projects('','',$user_name);
 												}
 											?> </label></a></li>
                             <li><a href="ongoingprojects"><i class="fa fa-spinner fa-pulse"></i> Ongoing Projects <label class="label label-info pull-right"> <?php
-												if($this->userdata[0]->user_group == 1 ||
-													$this->userdata[0]->user_role_id == 4) {
-														// echo $count = get_count('*', 'projects', "project_status = 'ongoing' ");
-                                                      $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' ");
-                                                       echo $count= $query->num_rows();
+												if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_role_id == 4) {
+														
+                                                      echo $this->common_model->count_ongoing('','','');
 												} else if($this->userdata[0]->team_lead == 1 && $this->userdata[0]->user_group == 8){
 													$type =$this->userdata[0]->user_client_type;
-													// echo $count = get_count('*', 'projects', "project_status = 'ongoing' AND project_package_type = '$type'");
-                                                    $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' AND project_package_type = '$type'");
-                                                    echo $count=$query->num_rows();
+													echo $this->common_model->count_ongoing($type,'','');
 												}
 												else if($this->userdata[0]->user_group == 9){
 													$type = $this->userdata[0]->user_client_type;
 													$user_id =$this->userdata[0]->user_id;
-													// echo $count = get_count('*', 'projects', "project_status = 'ongoing' AND project_package_type = '$type' AND alloted_to = '$user_id'");
-                                                    $this->db->query("SELECT * FROM projects WHERE project_status = 'ongoing' AND project_package_type = '$type' AND alloted_to = '$user_id'");
-                                                     echo $count= $query->num_rows();
+													echo $this->common_model->count_ongoing($type,$user_id,'');
 												}
 												else{
-													// echo $count = get_count('*', 'projects', "project_sales_executive = '$user_name' AND project_status = 'ongoing' ");
-                                                    $this->db->query("SELECT * FROM projects project_sales_executive = '$user_name' AND project_status = 'ongoing'");
-                                                    echo $count= $query->num_rows();
+													 $user_name= $this->userdata[0]->name;
+                                                    echo $this->common_model->count_ongoing('','',$user_name);
 
 												}
 											?> </label></a></li>
@@ -151,28 +136,20 @@
 		                        		if($this->userdata[0]->user_group == 1 ||
 		                        			$this->userdata[0]->user_role_id == 4
 		                        			){
-			                        			// echo $count = get_count('*', 'clients', '');
-                                               $this->db->query("SELECT * FROM clients");
-                                               echo $count = $query->num_rows();
+                                               echo $this->common_model->count_company('','','');
 			                        	}else if($this->userdata[0]->team_lead == 1 && $this->userdata[0]->user_group == 8){
-				                        	$i = 0;
+				                        	
 				                        	$type = $this->userdata[0]->user_client_type;
-				                        	$query = get_query('project_client_id', 'projects', "project_package_type = '$type' ");
-				                        	while($data = mysqli_fetch_array($query, MYSQLI_NUM)){
-					                        	$i += get_count('*','clients',"client_id = '$data[0]'");
-				                        	}
-				                        	echo $i;
+                                             echo $this->common_model->count_company($type,'','');
+				                        	
 				                        }else if($this->userdata[0]->user_group == 9){
-					                        $i = 0;
+					                       
 				                        	$type = $this->userdata[0]->user_client_type;
 				                        	$user_id = $this->userdata[0]->user_id;
-				                        	$query = get_query('project_client_id', 'projects', "project_package_type = '$type' AND alloted_to = '$user_id' ");
-				                        	while($data = mysqli_fetch_array($query, MYSQLI_NUM)){
-					                        	$i += get_count('*','clients',"client_id = '$data[0]'");
-				                        	}
-				                        	echo $i;
+				                        	echo $this->common_model->count_company($type,$user_id,'');
 					                    } else{
-				                        	echo $count = get_count('*', 'clients', " client_sales_executive = '$user_name' ");
+                                            $user_name= $this->userdata[0]->name;
+				                        	echo $this->common_model->count_company('','',$user_name);
 				                        }
 									?> </label></span></a>
                         <ul class="nav nav-second-level collapse">

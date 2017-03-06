@@ -1,6 +1,6 @@
 <?php
 $date = date('Y-m-d');
-if($_SESSION['user_role_id'] == 1){ // Admin Dashboard
+ // Admin Dashboard
 $user_name = $this->userdata[0]->name;
 ?>
 <div id="page-wrapper" class="gray-bg">
@@ -60,11 +60,11 @@ $user_name = $this->userdata[0]->name;
 											<?php
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
-											 echo get_count('*', 'projects', " project_sales_executive_id = '$user_id' ");
+											 echo $this->gp1_model->total_projests_count($user_id,'');
 											 }else if( $this->userdata[0]->user_group == 2){
-											 echo get_count('*', 'projects', " project_sales_executive = '$user_name' ");
+											  echo $this->gp1_model->total_projests_count('',$user_name);
 											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4) {
-											 echo get_count('*', 'projects', '');
+											 echo $this->gp1_model->total_projests_count('','');
 											 }
 											 ?>
 										</h1>
@@ -756,5 +756,5 @@ $user_name = $this->userdata[0]->name;
 									</div>
 								</div>
 <?php
- }
+ 
  ?>
