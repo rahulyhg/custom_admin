@@ -1,6 +1,6 @@
 <?php
 
-class common_model extends CI_Model{
+class common_model extends MY_Model{
 
 
 		public function getUserData($data){

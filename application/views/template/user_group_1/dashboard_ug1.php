@@ -61,15 +61,11 @@ $user_name = $this->userdata[0]->name;
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
 											 echo $this->gp1_model->total_projests_count($user_id,'');
-											 }else if( $this->userdata[0]->user_group == 2){
-											  echo $this->gp1_model->total_projests_count('',$user_name);
-											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4) {
+											 }else {
 											 echo $this->gp1_model->total_projests_count('','');
 											 }
 											 ?>
 										</h1>
-										<!-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div> -->
-										<!-- <small>Total Projects</small> -->
 									</div>
 								</div>
 							</div>
@@ -89,11 +85,9 @@ $user_name = $this->userdata[0]->name;
 											 $uid= get_query('name','users'," username ='$user_id_team'");
 											 $uid_data = mysqli_fetch_array($uid, MYSQLI_NUM);
 											 $client_sales_executive =$uid_data[0];
-											 echo get_count('*', 'clients', "client_sales_executive = '$client_sales_executive' ");
-											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
-											 echo get_count('*', 'clients', '');
-											 }else if( $this->userdata[0]->user_group == 2){
-											 echo get_count('*', 'clients', " client_sales_executive = '$user_name' ");
+											 echo $this->gp1_model->total_clients($client_sales_executive,'');
+											 }else {
+											 echo $this->gp1_model->total_clients('','');
 											 }
 											 ?>
 										</h1>
@@ -114,13 +108,11 @@ $user_name = $this->userdata[0]->name;
 											<?php
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
-											 echo get_count('*', 'projects', " project_sales_executive_id = '$user_id' AND project_status = 'completed'");
-											 }else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
-											 echo get_count('*', 'projects', "project_status = 'completed'");
+											 echo $this->gp1_model->total_completed($user_id,'');
+											 }else {
+											  echo $this->gp1_model->total_completed('','');
 											 }
-											 else if( $this->userdata[0]->user_group == 2){
-											 echo get_count('*', 'projects', "project_status = 'completed' AND project_sales_executive = '$user_name' ");
-											 }
+											
 											 ?>
 										</h1>
 										<!-- <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div><small>New visits</small> -->
@@ -140,12 +132,9 @@ $user_name = $this->userdata[0]->name;
 											<?php
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
-											 echo get_count('*', 'projects', " project_sales_executive_id = '$user_id' AND project_status = 'ongoing' ");
-											 } else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
-											 echo get_count('*', 'projects', "project_status = 'ongoing'");
-											 }
-											 else if( $this->userdata[0]->user_group == 2){
-											 echo get_count('*', 'projects', "project_status = 'ongoing' AND project_sales_executive = '$user_name' ");
+											 echo $this->gp1_model->total_ongoing($user_id,'');
+											 } else {
+											 echo $this->gp1_model->total_ongoing('','');
 											 }
 											 ?>
 										</h1>
@@ -175,13 +164,10 @@ $user_name = $this->userdata[0]->name;
 											<?php
 											 if($_GET){
 											 $user_id=$_GET['selected_userid'];
-											 $project_count= get_count('*', 'projects', " project_sales_executive_id = '$user_id' ");
+											 echo $project_count=$this->gp1_model->total_projests_count($user_id,'');
 											 }
-											 else if( $this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
-											 $project_count = get_count('*', 'projects', '');
-											 }
-											 else if( $this->userdata[0]->user_group == 2){
-											 $project_count = get_count('*', 'projects', " project_sales_executive = '$user_name' ");
+											 else {
+											 echo $project_count=$this->gp1_model->total_projests_count('','');
 											 }
 											 if($project_count){
 											 ?>
@@ -198,35 +184,24 @@ $user_name = $this->userdata[0]->name;
 												</thead>
 												<tbody>
 													<?php
-													 if($_GET){
-													 $user_id=$_GET['selected_userid'];
-													 $query1= get_query('project_client_id, project_id, project_title, project_duration', 'projects', " project_sales_executive_id = '$user_id ' AND project_status = 'ongoing' ORDER BY project_date_created DESC LIMIT 5 ");
-													 }
-													 else if ($this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_role_id == 4){
-													 $query1 = get_query('project_client_id, project_id, project_title, project_duration', 'projects '," project_status='ongoing' ORDER BY project_date_created DESC LIMIT 5 ");
-													 }
-													 else if( $this->userdata[0]->user_group == 2){
-													 $query1 = get_query('project_client_id, project_id, project_title, project_duration', 'projects', " project_sales_executive = '$user_name' AND project_status = 'ongoing' ORDER BY project_date_created DESC LIMIT 5");
-													 }
-													 while($data1 = mysqli_fetch_array($query1, MYSQLI_NUM)):
-													 $query2 = get_query('client_company_name', 'clients', "client_id = '$data1[0]'");
-													 $data2 = mysqli_fetch_array($query2, MYSQLI_NUM);
-													 $total_count = get_count('*', 'milestones', "milestones_project_id = '$data1[1]'");
-													 $completed_count = get_count('*', 'milestones', "milestones_project_id = '$data1[1]' AND milestones_status = 'completed'");
-													 $completed_percentage = $completed_count / $total_count * 100;
+													 
+													 
+													  //$this->gp1_model->get_project('');
 													 ?>
 													<tr>
 														<td>
 															<?php echo $data2[0];?>
 														</td>
 														<td>
-															<?php echo $data1[2]; ?>
+															<?php foreach ($get_project->result() as $row) {
+																echo $row->project_title;
+															}  ?>
 														</td>
 														<td>
 															<?php echo $data1[3]; ?>
 														</td>
 														<td>
-															<?php $query_milestone=get_query('milestones_category','milestones',"milestones_status='ongoing' AND milestones_project_id='$data1[1]'");
+															<!-- <?php $query_milestone=get_query('milestones_category','milestones',"milestones_status='ongoing' AND milestones_project_id='$data1[1]'");
 																 while($data_milestone=mysqli_fetch_array($query_milestone,MYSQLI_NUM)):
  																?>
 															<?php echo $data_milestone[0]; ?>, 
@@ -265,14 +240,11 @@ $user_name = $this->userdata[0]->name;
 																	</a>
 																</td>
 															</tr>
-															<?php endwhile; ?>
+															<?php ?>
 														</tbody>
 													</table>
 													<?php
-													 }else{
-													 ?>
-													<p class="text-center font-20">No projects found!</p>
-													<?php } ?>
+													 } ?> -->
 												</div>
 											</div>
 											<?php if ($this->userdata[0]->user_role_id == 1 ||  $this->userdata[0]->user_group == 8) : ?>
