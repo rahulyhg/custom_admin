@@ -8,10 +8,10 @@
         </div>
     </div>
     <!-- Mainly scripts -->
-    <script src="<?php base_url(); ?>assets/js/jquery-2.1.1.js"></script>
-    <script src="<?php base_url(); ?>assets/js/bootstrap.min.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/jquery-2.1.1.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- nicescroll -->
     <!--<script src="js/jquery.nicescroll.min.js"></script>
@@ -23,40 +23,40 @@
 
 
     <!-- Flot -->
-    <script src="<?php base_url(); ?>assets/js/plugins/flot/jquery.flot.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/flot/jquery.flot.pie.js"></script>
     <!-- Peity -->
-    <script src="<?php base_url(); ?>assets/js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="<?php base_url(); ?>assets/js/demo/peity-demo.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/demo/peity-demo.js"></script>
     <!-- Custom and plugin javascript -->
-    <script src="<?php base_url(); ?>assets/js/inspinia.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/pace/pace.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/inspinia.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/pace/pace.min.js"></script>
     <!-- jQuery UI -->
-    <script src="<?php base_url(); ?>assets/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- GITTER -->
-    <script src="<?php base_url(); ?>assets/js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/gritter/jquery.gritter.min.js"></script>
     <!-- Sparkline -->
-    <script src="<?php base_url(); ?>assets/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- Sparkline demo data  -->
-    <script src="<?php base_url(); ?>assets/js/demo/sparkline-demo.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/demo/sparkline-demo.js"></script>
     <!-- ChartJS-->
-    <script src="<?php base_url(); ?>assets/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/chartJs/Chart.min.js"></script>
     <!-- Toastr -->
-    <script src="<?php base_url(); ?>assets/js/plugins/toastr/toastr.min.js"></script>
-    <script src="<?php base_url(); ?>assets/js/bootstrap-select.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/toastr/toastr.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-select.js"></script>
 
-    <script src="<?php base_url(); ?>assets/js/moment.min.js"></script>
-    <script src="<?php base_url(); ?>assets/js/fullcalendar.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/fullcalendar.min.js"></script>
     <!-- <script src="//code.jquery.com/jquery.min.js"></script> -->
-    <script src="<?php base_url(); ?>assets/js/timingfield.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/timingfield.js"></script>
 
 
     <!--<script src="js/jquery.cropit.js"></script>-->
 
-    <script type="text/javascript" src="<?php base_url(); ?>assets/js/widgEditor.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/widgEditor.js"></script>
 
     <!-- Bootstrat Datatable -->
     <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
@@ -66,13 +66,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/js/bootstrap-datepicker.min.js"></script>
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    <script src="<?php base_url(); ?>assets/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/iCheck/icheck.min.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
      <!--tooltip-->
-       <script type="text/javascript" src="<?php base_url(); ?>assets/js/tipped.js"></script>
-       <link rel="stylesheet" type="text/css" href="<?php base_url(); ?>assets/css/tipped.css"/>
+       <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/tipped.js"></script>
+       <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/tipped.css"/>
     <script>
         $(document).ready(function(){
         	$('#datatable').DataTable( {
@@ -527,7 +527,7 @@
     <!-- end arrowchat -->
 
     <!-- desktop notification -->
-    <script src="<?php base_url(); ?>assets/js/desktop-notification.php"></script>
+    <script src="<?php echo base_url(); ?>assets/js/desktop-notification.php"></script>
     <script>
 
         $.ajax({

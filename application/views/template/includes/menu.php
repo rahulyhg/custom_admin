@@ -1,3 +1,4 @@
+        <?php  $gp = $this->userdata[0]->group_no; ?>
          <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
@@ -87,7 +88,7 @@
 				                        }
 				                    ?>  </label></span></a>
                         <ul class="nav nav-second-level collapse padding-fix">
-                            <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 ||$this->userdata[0]->team_lead == 1) : ?><li><a href="addnewproject"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
+                            <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 ||$this->userdata[0]->team_lead == 1) : ?><li><a href="<?php echo base_url();?><?php echo $gp; ?>/add_project"><i class="fa fa-plus"></i> Add Project</a></li><?php endif; ?>
                             <li><a href="completedprojects"><i class="fa fa-check"></i> Completed Projects <label class="label label-info pull-right"> <?php
 												if($this->userdata[0]->user_group == 1 || $this->userdata[0]->user_role_id == 4 ) {
 														echo $this->common_model->count_completed_projects('','','');
