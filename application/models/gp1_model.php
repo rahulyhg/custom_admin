@@ -74,9 +74,9 @@ public function total_completed($user_id,$user_name){
   	}
   }
 
-  public function get_project($user_id){
-  	if(!$user_id ){
-  		$query = $this->db->query("SELECT project_client_id,project_id,project_title,project_duration FROM projects WHERE project_status='ongoing' ORDER BY project_date_created DESC LIMIT 5 ");
+  public function get_project(){
+  	
+  		/*$query = $this->db->query("SELECT project_client_id,project_id,project_title,project_duration FROM projects WHERE project_status='ongoing' ORDER BY project_date_created DESC LIMIT 5 ");
         foreach ($query->result() as $row)
 		{
 		        $project_client_id = $row->project_client_id;  
@@ -91,11 +91,17 @@ public function total_completed($user_id,$user_name){
 		       return $query_total_count;
 		       return $query_completed_count;
 
-		}
+		}*/
+
+		$query = $this->db->query("SELECT t1.project_client_id,t1.project_id,t1.project_title,t1.project_duration,t2.client_company_name, t3.* FROM projects t1 LEFT JOIN clients t2 ON t1.project_client_id = t2.client_id LEFT JOIN milestones t3 ON t1.project_id = t3.milestones_project_id AND t3.milestones_status = 'completed' WHERE t1.project_status='ongoing' ORDER BY t1.project_date_created DESC LIMIT 5 ");
+		return $query;
+        echo $total_count =$query->count_all_results('t3.milestones_id');
 
 
-  	}
+  	
   }
+
+  public function latest_project(){}
 
 
 }

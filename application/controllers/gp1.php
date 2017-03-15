@@ -13,7 +13,7 @@ class gp1 extends MY_Controller {
 	{   
 		
 		$this->load->model('gp1_model');
-		$data['get_project'] = $this->gp1_model->get_project('');
+		$data['get_project'] = $this->gp1_model->get_project();
 		$data['current_page'] = 'Dashboard';
 		$this->load->view('template/includes/header',$data);
 		$this->load->view('template/includes/menu',$data);

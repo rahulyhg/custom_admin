@@ -169,9 +169,9 @@ $user_name = $this->userdata[0]->name;
 											 //  }
 											 //  else 
 
-											   $project_count=$this->gp1_model->total_projests_count('','');
+											   // $project_count=$this->gp1_model->total_projests_count('','');
 											  
-											  if($project_count){
+											
 											 ?>
 											<table class="table table-hover no-margins">
 												<thead>
@@ -192,7 +192,11 @@ $user_name = $this->userdata[0]->name;
 													 ?>
 													<tr>
 														<td>
-															<?php echo $data2[0];?>
+															
+															<?php foreach($get_project->result() as $row){
+															
+                                                              echo $row->client_company_name;
+																}?>
 														</td>
 														<td>
 															<?php foreach ($get_project->result() as $row) {
@@ -200,16 +204,22 @@ $user_name = $this->userdata[0]->name;
 															}  ?>
 														</td>
 														<td>
-															<?php echo $data1[3]; ?>
+															<?php foreach ($get_project->result() as $row) {
+																echo $row->project_duration;
+															}  ?>
+															
 														</td>
 														<td>
-															 <?php $query_milestone=get_query('milestones_category','milestones',"milestones_status='ongoing' AND milestones_project_id='$data1[1]'");
-																 while($data_milestone=mysqli_fetch_array($query_milestone,MYSQLI_NUM)):
- 																?>
-															<?php echo $data_milestone[0]; ?>, 
+															 
+															 <?php foreach ($get_project->result() as $row) {
+																echo $row->milestones_category;
+																// echo $total_count = count($row->milestones_id);
+															}  
+                                                             
+															?>
 															<br>
 																<br>
-																	<?php endwhile; ?>
+																	
 																</td>
 																<?php if($completed_percentage <= 25) { ?>
 																<td class="text-red " style="backgraound-color= red;">
@@ -246,7 +256,7 @@ $user_name = $this->userdata[0]->name;
 														</tbody>
 													</table>
 													<?php
-													 } ?>
+													  ?>
 												</div>
 											</div>
 											

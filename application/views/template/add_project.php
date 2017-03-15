@@ -7,8 +7,8 @@
                             <h5>Add New Project</small></h5>
                         </div>
                         <div class="ibox-content">
-                            <form method="POST" class="form-horizontal" action="functions/addproject">
-                            <?php echo form_open('gp1/') ?>
+                           <!--  <form method="POST" class="form-horizontal" action="functions/addproject"> -->
+                            <?php echo form_open('gp1/','class="form-horizontal"'); ?>
                                 <div class="form-group"><label class="col-sm-2 control-label">Company Name</label>
                                     <div class="col-sm-10">
                                         <select class="selectpicker show-tick form-control allcaps" data-live-search="true" name="client_id" required>
@@ -369,12 +369,18 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Payment Method</label>
                                     <div class="col-sm-10">
-                                        <select class="selectpicker show-tick form-control" id="payment-mode" data-live-search="true" name="payment_mode">
+                                        <!-- <select class="selectpicker show-tick form-control" id="payment-mode" data-live-search="true" name="payment_mode">
                                             <option value="" required>Select</option>
                                             <option value="Cheque">Cheque</option>
                                             <option value="Cash">Cash</option>
                                             <option value="Online">Online</option>
-                                        </select>
+                                        </select> -->
+                                       <?php  $options=array(
+                                       ''=>'Select',
+                                       'Cheque'=>'Cheque',
+                                       'Cash'=>'Cash',
+                                        'Online'=>'Online');
+                                        echo form_dropdown('payment_mode',$options,'','class="selectpicker show-tick form-control" id="payment-mode" data-live-search="true"') ?>
                                     </div>
                                 </div>
                                 <div id="online_bank">

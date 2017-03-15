@@ -154,7 +154,7 @@
 				                        }
 									?> </label></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 || $this->userdata[0]->team_lead == 1) : ?><li><a href="addnewclient"><i class="fa fa-plus"></i> Add Company</a></li><?php endif; ?>
+                            <?php if($this->userdata[0]->user_role_id == 1 || $this->userdata[0]->user_group == 2 || $this->userdata[0]->team_lead == 1) : ?><li><a href="<?php echo base_url();?><?php echo $gp; ?>/addnewclient"><i class="fa fa-plus"></i> Add Company</a></li><?php endif; ?>
                             <li><a href="allclients"><i class="fa fa-check"></i> All Company</a></li>
                         </ul>
                     </li>

@@ -9,42 +9,68 @@
                             <h5>Add New Client</small></h5>
                         </div>
                         <div class="ibox-content">
-                            <form method="POST" class="form-horizontal" action="functions/addclient">
+                          <!--   <form method="POST" class="form-horizontal" action="functions/addclient"> -->
+                          <?php echo form_open('gp1/','class="form-horizontal"'); ?>
                                 <div class="form-group"><label class="col-sm-2 control-label">Company Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="company_name" placeholder="Company Name" required> 
+                                       <!--  <input type="text" class="form-control" name="company_name" placeholder="Company Name" required>  -->
+                                       <?php $data = array(
+                                       'class'=>'form-control',
+                                       'name'=>'company_name',
+                                       'placeholder'=>'Company Name');
+                                       echo form_input($data); ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Address</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="company_address" placeholder="Address" required></textarea> 
+                                        <!-- <textarea class="form-control" name="company_address" placeholder="Address" required></textarea>  -->
+                                        <?php 
+                                        $data = array(
+                                        'class'=>'form-control',
+                                        'name'=>'company_address',
+                                        'placeholder'=>'Address'
+                                        );
+                                        echo form_textarea($data);
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">City</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="company_city" placeholder="City" required></div>
+                                    <div class="col-sm-10"><!-- <input type="text" class="form-control" name="company_city" placeholder="City" required> -->
+                                        <?php $data = array('class'=>'form-control',
+                                        'name'=>'company_city',
+                                        'placeholder'=>'City');
+                                        echo form_input($data);  ?>
+                                    </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-lg-2 control-label">State</label>
 
                                     <div class="col-lg-10">
-                                    	<input type="text" placeholder="State" name="company_state" class="form-control">
-                                    	<!--<select class="selectpicker show-tick form-control" data-live-search="true" name="company_state">
-
-                                    	</select>-->
+                                    	<!-- <input type="text" placeholder="State" name="company_state" class="form-control"> -->
+                                        <?php $data = array('placeholder'=>'State',
+                                        'name'=>'company_state',
+                                        'class'=>'form-control');
+                                        echo form_input($data); ?>
+                                    	
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Zip Code</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="company_zipcode" placeholder="Zip code" autocomplete="off">
+                                        <!-- <input type="text" class="form-control" name="company_zipcode" placeholder="Zip code" autocomplete="off"> -->
+                                        <?php $data = array('class'=>'form-control',
+                                        'name'=>'company_zipcode',
+                                        'placeholder'=>'Zip code',
+                                        'autocomplete'=>'off');
+                                        echo form_input($data); ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Country</label>
                                     <div class="col-sm-10">
-                                        <!--<input type="text" name="company_country" placeholder="Country" class="form-control" />-->
+                                      
                                         <select class="selectpicker show-tick form-control" data-live-search="true" name="company_country">
 <option value=""></option>
 <option value="Afganistan">Afghanistan</option>
@@ -295,37 +321,72 @@
 <option value="Zambia">Zambia</option>
 <option value="Zimbabwe">Zimbabwe</option>
                                     	</select>
-                                    </div>
+                                        </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Website</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="company_website" placeholder="Website" class="form-control" />
+                                        <!-- <input type="text" name="company_website" placeholder="Website" class="form-control" /> -->
+                                        <?php
+                                        $data = array(
+                                            'name'=>'company_website',
+                                            'placeholder'=>'Website',
+                                            'class'=>'form-control');
+                                            echo form_input($data); 
+                                        ?>
                                     </div>
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Full Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="company_fullname[]" placeholder="Full name" class="form-control" />
+                                        <!-- <input type="text" name="company_fullname[]" placeholder="Full name" class="form-control" /> -->
+                                        <?php
+                                        $data = array(
+                                            'name'=>'company_fullname[]',
+                                            'placeholder'=>'Full name',
+                                            'class'=>'form-control');
+                                            echo form_input($data); 
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Designation</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="company_designation[]" placeholder="Designation" class="form-control" />
+                                        <!-- <input type="text" name="company_designation[]" placeholder="Designation" class="form-control" /> -->
+                                        <?php
+                                        $data = array(
+                                            'name'=>'company_designation[]',
+                                            'placeholder'=>'Designation',
+                                            'class'=>'form-control');
+                                            echo form_input($data); 
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Mobile Number</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="company_phone[]" placeholder="Phone" class="form-control" />
+                                       <!--  <input type="text" name="company_phone[]" placeholder="Phone" class="form-control" /> -->
+                                       <?php
+                                        $data = array(
+                                            'name'=>'company_phone[]',
+                                            'placeholder'=>'Phone',
+                                            'class'=>'form-control');
+                                            echo form_input($data); 
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Landline Number</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="company_landline[]" placeholder="Phone" class="form-control" />
+                                        <!-- <input type="text" name="company_landline[]" placeholder="Phone" class="form-control" /> -->
+                                        <?php
+                                        $data = array(
+                                            'name'=>'company_landline[]',
+                                            'placeholder'=>'Phone',
+                                            'class'=>'form-control');
+                                            echo form_input($data); 
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
@@ -335,39 +396,35 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="company_email" placeholder="Email" />
+                                        <!-- <input type="text" class="form-control" name="company_email" placeholder="Email" /> -->
+                                        <?php
+                                        $data = array(
+                                            'name'=>'company_email',
+                                            'placeholder'=>'Email',
+                                            'class'=>'form-control');
+                                            echo form_input($data); 
+                                        ?>
                                     </div>
                                 </div>
                                 
-                                
-                                <?php
-                                    if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3){
-                                        echo '<input type="hidden" name="sales_executive" value="'.$_SESSION['name'].'">';
-                                        echo '<input type="hidden" name="sales_executive_id" value="'.$_SESSION['user_role_id'].'">';
-                                    }
-                                    else{
-                                ?>
+                               
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group"><label class="col-sm-2 control-label">Sales Executive</label>
                                     <div class="col-sm-10">
                                         <select class="selectpicker show-tick form-control" data-live-search="true" name="sales_executive">
                                             <option value="">Select</option>
-                                            <?php
-                                                $query = get_query('name,username', 'users', " user_group = 2 ");
-                                                while($data = mysqli_fetch_array($query, MYSQLI_NUM)):
-                                            ?>
-                                            <option value="<?php echo $data[0]; ?>"><?php echo $data[0]; ?></option>
-                                            <?php endwhile; ?>
+                                           
                                         </select>
                                     </div>
                                 </div>
-                                <?php } ?>
+                             
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <button class="btn btn-primary  simple-tooltip" title="Submit the form" type="submit">Add</button>
                                     </div>
                                 </div>
-                            </form>
+                         <!--    </form> -->
+                          <?php echo form_close() ?>
                         </div>
                     </div>
                 </div>
